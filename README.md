@@ -1,75 +1,33 @@
-# React + TypeScript + Vite
+# DoDue
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React 19, TypeScript, and Vite application using Bun.
 
-Currently, two official plugins are available:
+## Commands
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- `bun run dev` starts the Vite dev server on port `3000`.
+- `bun run lint` runs Biome checks for linting, formatting, and import organization.
+- `bun run format` applies Biome formatting, safe fixes, and import organization.
+- `bun run build` runs TypeScript and the Vite production build.
 
-## React Compiler
+## Stack
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Tailwind CSS for utility-first styling.
+- shadcn/ui conventions for components.
+- Lucide React for icons.
+- Sass for custom CSS outside utility-class composition.
+- Biome for code quality instead of separate lint and format tools.
+- Firebase Auth and Firestore for backend services.
+- TanStack Query wraps normal Firestore SDK reads and mutations for caching and invalidation.
+- TanStack Router for page routing and protected routes.
 
-Note: This will impact Vite dev & build performances.
+## Routes
 
-## Expanding the ESLint configuration
+- `/` is the public landing page with Google login.
+- `/home` is the protected task workspace.
+- Unknown routes render the public 404 page.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Firebase
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Copy `.env.example` to `.env.local` and fill in the Vite Firebase values from
+your Firebase web app configuration. Enable Google as a Firebase Auth sign-in
+method before using the login button.

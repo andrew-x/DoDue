@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "plansDirectory": ".tmp/plans",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"$(git rev-parse --show-toplevel)/.claude/hooks/cleanup-tmp.sh\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
+

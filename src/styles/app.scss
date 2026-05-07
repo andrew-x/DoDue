@@ -1,0 +1,191 @@
+.app-chrome {
+  min-height: 100svh;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--card) 72%, transparent) 0%,
+      transparent 34rem
+    ),
+    var(--background);
+}
+
+.task-row {
+  background: color-mix(in oklab, var(--card) 55%, transparent);
+  box-shadow: inset 0 1px 0
+    color-mix(in oklab, var(--foreground) 8%, transparent);
+  transition: background-color 120ms ease;
+}
+
+.task-priority {
+  --task-priority-base: var(--accent);
+  --task-priority-bg: color-mix(
+    in oklab,
+    var(--task-priority-base) 13%,
+    transparent
+  );
+  --task-priority-hover-bg: color-mix(
+    in oklab,
+    var(--task-priority-base) 18%,
+    transparent
+  );
+  --task-priority-active-bg: color-mix(
+    in oklab,
+    var(--task-priority-base) 25%,
+    transparent
+  );
+  --task-priority-border: color-mix(
+    in oklab,
+    var(--task-priority-base) 42%,
+    transparent
+  );
+  --task-priority-text: color-mix(
+    in oklab,
+    var(--task-priority-base) 80%,
+    var(--foreground)
+  );
+}
+
+.task-priority--p1 {
+  --task-priority-base: oklch(0.58 0.22 27);
+}
+
+.task-priority--p2 {
+  --task-priority-base: oklch(0.66 0.16 68);
+}
+
+.task-priority--p3 {
+  --task-priority-base: var(--primary);
+}
+
+.task-priority--p4 {
+  --task-priority-base: oklch(0.5 0.018 250);
+}
+
+.dark .task-priority--p1 {
+  --task-priority-base: oklch(0.72 0.19 27);
+}
+
+.dark .task-priority--p2 {
+  --task-priority-base: oklch(0.78 0.15 78);
+}
+
+.dark .task-priority--p4 {
+  --task-priority-base: oklch(0.74 0.018 250);
+}
+
+.task-priority-chip {
+  background: var(--task-priority-bg);
+  border: 1px solid var(--task-priority-border);
+  color: var(--task-priority-text);
+}
+
+.task-priority-option {
+  color: var(--task-priority-text);
+}
+
+.task-priority-option:hover {
+  background: var(--task-priority-hover-bg);
+  color: var(--task-priority-text);
+}
+
+.task-priority-option[aria-pressed="true"] {
+  background: var(--task-priority-active-bg);
+  border-color: var(--task-priority-border);
+  box-shadow: inset 0 0 0 1px var(--task-priority-border);
+  color: var(--task-priority-text);
+}
+
+.task-priority-chip svg,
+.task-priority-option svg {
+  color: var(--task-priority-base);
+}
+
+.task-input-editor {
+  line-height: 1.5;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+}
+
+.task-input-editor:focus,
+.task-input-editor:focus-visible {
+  background: color-mix(in oklab, var(--primary) 12%, var(--background));
+  border-color: var(--primary);
+  box-shadow:
+    0 0 0 4px color-mix(in oklab, var(--primary) 38%, transparent),
+    inset 0 0 0 1px color-mix(in oklab, var(--primary) 32%, transparent);
+  outline: none;
+}
+
+.task-input-section {
+  transition:
+    color 150ms ease,
+    letter-spacing 150ms ease;
+}
+
+.task-input-section:focus-within .task-input-section-label {
+  color: color-mix(in oklab, var(--primary) 80%, var(--foreground));
+}
+
+.triage-card {
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--accent) 9%, transparent) 0%,
+      color-mix(in oklab, var(--accent) 3%, transparent) 100%
+    ),
+    color-mix(in oklab, var(--background) 35%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 38%, var(--border));
+}
+
+.triage-icon {
+  background: color-mix(in oklab, var(--accent) 18%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 42%, var(--border));
+  color: color-mix(in oklab, var(--accent) 70%, var(--foreground));
+}
+
+.triage-count {
+  background: color-mix(in oklab, var(--accent) 14%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 38%, var(--border));
+  color: color-mix(in oklab, var(--accent) 70%, var(--foreground));
+}
+
+.triage-inner {
+  background: color-mix(in oklab, var(--accent) 4%, transparent);
+  border-color: color-mix(in oklab, var(--accent) 28%, var(--border));
+}
+
+.task-input-token {
+  border-radius: calc(var(--radius) - 4px);
+  box-decoration-break: clone;
+  font-weight: 600;
+  padding: 0 0.18rem;
+}
+
+.task-input-token--do-date {
+  background: color-mix(in oklab, var(--primary) 20%, transparent);
+  color: color-mix(in oklab, var(--primary) 78%, var(--foreground));
+}
+
+.task-input-token--due-date {
+  background: color-mix(in oklab, var(--destructive) 18%, transparent);
+  color: color-mix(in oklab, var(--destructive) 76%, var(--foreground));
+}
+
+.task-input-token--priority {
+  background: var(
+    --task-priority-bg,
+    color-mix(in oklab, var(--accent) 24%, transparent)
+  );
+  color: var(
+    --task-priority-text,
+    color-mix(in oklab, var(--accent) 72%, var(--foreground))
+  );
+}
+
+.task-input-token--tag {
+  background: color-mix(in oklab, var(--foreground) 12%, transparent);
+  color: var(--foreground);
+  text-transform: lowercase;
+}
