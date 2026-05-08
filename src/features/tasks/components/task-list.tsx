@@ -6,7 +6,6 @@ import {
   CalendarPlus,
   CheckCircle2,
   Circle,
-  Flag,
   GripVertical,
   Inbox,
   Loader2,
@@ -21,10 +20,10 @@ import type { Task } from '@/lib/data-model'
 import { cn } from '@/lib/utils'
 
 import { getTaskDragData, type TaskDragData } from '../task-dnd'
-import { getTaskPriorityClassName, taskPriorityLabels } from '../task-priority'
 import { useTaskActions } from './task-actions-context'
 import { type TaskDateField, TaskDateMetaBadge } from './task-date-meta-badge'
 import { taskMetaBadgeClassName } from './task-list-styles'
+import { TaskPriorityMetaBadge } from './task-priority-meta-badge'
 import { TaskRowActionButton } from './task-row-action-button'
 
 export type TaskListDragOptions = {
@@ -121,7 +120,9 @@ function TaskListItem({
   task: Task
 }) {
   const actions = useTaskActions()
-  const [openDateField, setOpenDateField] = useState<TaskDateField | null>(null)
+  const [openMetaField, setOpenMetaField] = useState<
+    TaskDateField | 'priority' | null
+  >(null)
   const isComplete = task.status === 'complete'
   const isArchived = task.status === 'archived'
   const isDragDisabled = !isDragEnabled || isPending || isReordering
@@ -322,9 +323,9 @@ function TaskListItem({
           <TaskDateMetaBadge
             disabled={isPending}
             field="doDate"
-            isOpen={openDateField === 'doDate'}
+            isOpen={openMetaField === 'doDate'}
             onOpenChange={(isOpen) =>
-              setOpenDateField(isOpen ? 'doDate' : null)
+              setOpenMetaField(isOpen ? 'doDate' : null)
             }
             onSelect={(value) => actions.onDateChange(task, 'doDate', value)}
             value={task.doDate}
@@ -332,24 +333,22 @@ function TaskListItem({
           <TaskDateMetaBadge
             disabled={isPending}
             field="deadline"
-            isOpen={openDateField === 'deadline'}
+            isOpen={openMetaField === 'deadline'}
             onOpenChange={(isOpen) =>
-              setOpenDateField(isOpen ? 'deadline' : null)
+              setOpenMetaField(isOpen ? 'deadline' : null)
             }
             onSelect={(value) => actions.onDateChange(task, 'deadline', value)}
             value={task.deadline}
           />
-          <Badge
-            className={cn(
-              taskMetaBadgeClassName,
-              'task-priority-chip',
-              getTaskPriorityClassName(task.priority),
-            )}
-            variant="outline"
-          >
-            <Flag className="size-3 shrink-0" />
-            {taskPriorityLabels[task.priority]}
-          </Badge>
+          <TaskPriorityMetaBadge
+            disabled={isPending}
+            isOpen={openMetaField === 'priority'}
+            onOpenChange={(isOpen) =>
+              setOpenMetaField(isOpen ? 'priority' : null)
+            }
+            onSelect={(priority) => actions.onPriorityChange(task, priority)}
+            value={task.priority}
+          />
         </div>
       </div>
     </li>

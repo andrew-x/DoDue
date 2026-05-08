@@ -26,7 +26,12 @@ import {
   useTasks,
   useUpdateTask,
 } from '@/features/tasks/task-queries'
-import type { Task, TaskStatus, UpdateTaskInput } from '@/lib/data-model'
+import type {
+  Task,
+  TaskPriority,
+  TaskStatus,
+  UpdateTaskInput,
+} from '@/lib/data-model'
 import { getErrorMessage } from '@/lib/errors'
 
 export function HomePage() {
@@ -136,6 +141,14 @@ export function HomePage() {
     )
   }
 
+  async function updateTaskPriority(task: Task, priority: TaskPriority) {
+    if (task.priority === priority) {
+      return
+    }
+
+    await applyTaskUpdate(task, { priority })
+  }
+
   async function handleToggleTask(task: Task) {
     await updateTaskStatus(
       task,
@@ -211,6 +224,8 @@ export function HomePage() {
                   void moveTaskToDoDate(task, tomorrowKey),
                 onEditTask: (task) => setEditingTaskId(task.id),
                 onMoveToBacklog: (task) => void moveTaskToBacklog(task),
+                onPriorityChange: (task, priority) =>
+                  void updateTaskPriority(task, priority),
                 onStatusChange: (task, status) =>
                   void updateTaskStatus(task, status),
                 onToggle: (task) => void handleToggleTask(task),

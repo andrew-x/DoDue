@@ -181,6 +181,7 @@ export function TaskEditDialog({
               onDraftChange={tagDraft.handleDraftChange}
               onDraftKeyDown={handleTagDraftKeyDown}
               onRemoveTag={handleRemoveTag}
+              suggestionsSide="top"
               tags={tagDraft.tags}
             />
 

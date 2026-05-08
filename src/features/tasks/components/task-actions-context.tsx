@@ -1,6 +1,11 @@
 import { createContext, type ReactNode, useContext } from 'react'
 
-import type { DateOnlyString, Task, TaskStatus } from '@/lib/data-model'
+import type {
+  DateOnlyString,
+  Task,
+  TaskPriority,
+  TaskStatus,
+} from '@/lib/data-model'
 
 import type { TaskDateField } from './task-date-meta-badge'
 
@@ -14,6 +19,7 @@ export type TaskActions = {
   onDoTomorrow: (task: Task) => void
   onEditTask: (task: Task) => void
   onMoveToBacklog: (task: Task) => void
+  onPriorityChange: (task: Task, priority: TaskPriority) => void
   onStatusChange: (task: Task, status: TaskStatus) => void
   onToggle: (task: Task) => void
   pendingTaskId: string | null

@@ -55,14 +55,18 @@ const tagSuggestionPopoverWidth = 224
 
 export function UnifiedTaskInput({
   className,
+  focusRequestKey = null,
   initialValue = '',
   onChange,
+  onFocusRequestComplete,
   onSubmit,
   rememberedTags = [],
 }: {
   className?: string
+  focusRequestKey?: number | null
   initialValue?: string
   onChange: (value: string) => void
+  onFocusRequestComplete?: () => void
   onSubmit: () => void
   rememberedTags?: string[]
 }) {
@@ -99,6 +103,10 @@ export function UnifiedTaskInput({
         <TaskInputChangePlugin onChange={onChange} />
         <TaskInputTagSuggestionsPlugin rememberedTags={rememberedTags} />
         <TaskInputSubmitPlugin onSubmit={onSubmit} />
+        <TaskInputFocusPlugin
+          focusRequestKey={focusRequestKey}
+          onFocusRequestComplete={onFocusRequestComplete}
+        />
         <HistoryPlugin />
       </div>
     </LexicalComposer>
@@ -476,6 +484,33 @@ function TaskInputSubmitPlugin({ onSubmit }: { onSubmit: () => void }) {
       ),
     [editor, onSubmit],
   )
+
+  return null
+}
+
+function TaskInputFocusPlugin({
+  focusRequestKey,
+  onFocusRequestComplete,
+}: {
+  focusRequestKey: number | null
+  onFocusRequestComplete: (() => void) | undefined
+}) {
+  const [editor] = useLexicalComposerContext()
+
+  useEffect(() => {
+    if (focusRequestKey === null) {
+      return
+    }
+
+    const frameId = window.requestAnimationFrame(() => {
+      editor.focus(() => {
+        $getRoot().selectEnd()
+      })
+      onFocusRequestComplete?.()
+    })
+
+    return () => window.cancelAnimationFrame(frameId)
+  }, [editor, focusRequestKey, onFocusRequestComplete])
 
   return null
 }

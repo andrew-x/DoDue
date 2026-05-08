@@ -79,6 +79,11 @@
   color: var(--task-priority-text);
 }
 
+.task-priority-chip:not(:disabled):hover {
+  background: var(--task-priority-hover-bg);
+  color: var(--task-priority-text);
+}
+
 .task-priority-option {
   color: var(--task-priority-text);
 }

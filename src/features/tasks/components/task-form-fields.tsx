@@ -132,6 +132,7 @@ export function TaskTagsField({
   onRemoveTag,
   readOnlyTagKeys = new Set<string>(),
   rememberedTags = [],
+  suggestionsSide = 'bottom',
   tags,
 }: {
   className?: string
@@ -144,6 +145,7 @@ export function TaskTagsField({
   onRemoveTag: (tag: string) => void
   readOnlyTagKeys?: Set<string>
   tags: string[]
+  suggestionsSide?: 'bottom' | 'top'
 }) {
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false)
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0)
@@ -271,7 +273,12 @@ export function TaskTagsField({
           />
         </div>
         {visibleSuggestions.length > 0 ? (
-          <div className="absolute top-full right-0 left-0 z-30 mt-2 overflow-hidden rounded-md border border-border/80 bg-popover py-1 text-popover-foreground shadow-xl">
+          <div
+            className={cn(
+              'absolute right-0 left-0 z-30 max-h-52 overflow-y-auto rounded-md border border-border/80 bg-popover py-1 text-popover-foreground shadow-xl',
+              suggestionsSide === 'top' ? 'bottom-full mb-2' : 'top-full mt-2',
+            )}
+          >
             {visibleSuggestions.map((suggestion, index) => (
               <button
                 className={cn(

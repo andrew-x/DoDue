@@ -31,6 +31,9 @@ export function TaskCreateForm({
 }) {
   const createTask = useCreateTask(userId)
   const [title, setTitle] = useState('')
+  const [titleFocusRequestKey, setTitleFocusRequestKey] = useState<
+    number | null
+  >(null)
   const [titleResetKey, setTitleResetKey] = useState(0)
   const [priority, setPriority] = useState<TaskPriority>('p3')
   const [doDate, setDoDate] = useState('')
@@ -113,6 +116,7 @@ export function TaskCreateForm({
         tags: parsedTags,
       })
       resetForm()
+      setTitleFocusRequestKey((currentKey) => (currentKey ?? 0) + 1)
     } catch (error) {
       setFormError(getErrorMessage(error, 'Could not create task.'))
     }
@@ -142,10 +146,12 @@ export function TaskCreateForm({
             </span>
             <UnifiedTaskInput
               className={taskEditorFieldClassName}
+              focusRequestKey={titleFocusRequestKey}
               initialValue={title}
               key={titleResetKey}
               rememberedTags={rememberedTags}
               onChange={setTitle}
+              onFocusRequestComplete={() => setTitleFocusRequestKey(null)}
               onSubmit={() => void submitTaskForm()}
             />
           </div>
